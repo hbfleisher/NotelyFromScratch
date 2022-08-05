@@ -1,7 +1,13 @@
+using NotelyFromScratch.Respository;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddMemoryCache();
+
+builder.Services.AddScoped<INoteRepository, NoteRepository>();
 
 var app = builder.Build();
 
