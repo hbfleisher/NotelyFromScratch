@@ -1,4 +1,4 @@
-using NotelyFromScratch.Respository;
+using NotelyFromScratch.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 

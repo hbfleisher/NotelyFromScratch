@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using NotelyFromScratch.Models;
 using System.Diagnostics;
-using NotelyFromScratch.Respository;
+using NotelyFromScratch.Repository;
 
 namespace NotelyFromScratch.Controllers
 {
@@ -11,13 +11,6 @@ namespace NotelyFromScratch.Controllers
         public HomeController(INoteRepository noteRepository)
         {
             _noteRepository = noteRepository;
-        }
-
-        private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
-        {
-            _logger = logger;
         }
 
         public IActionResult Index()

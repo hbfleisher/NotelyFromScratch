@@ -4,7 +4,7 @@ using System;
 using System.Linq;
 
 
-namespace NotelyFromScratch.Respository
+namespace NotelyFromScratch.Repository
 {
     public class NoteRepository : INoteRepository
     {
