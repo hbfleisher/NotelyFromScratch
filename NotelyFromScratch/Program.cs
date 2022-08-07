@@ -1,4 +1,4 @@
-using NotelyFromScratch.Respository;
+using NotelyFromScratch.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +24,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Note}/{action=Index}/{id?}");
 
 app.Run();

@@ -1,24 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using NotelyFromScratch.Models;
 using System.Diagnostics;
-using NotelyFromScratch.Respository;
+using NotelyFromScratch.Repository;
 
 namespace NotelyFromScratch.Controllers
 {
-    public class HomeController : Controller
+    public class NoteController : Controller
     {
-        private readonly INoteRepository _noteRepository;
-        public HomeController(INoteRepository noteRepository)
-        {
-            _noteRepository = noteRepository;
-        }
-
-        private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
-        {
-            _logger = logger;
-        }
+        static readonly INoteRepository _noteRepository = new NoteRepository();
 
         public IActionResult Index()
         {
@@ -51,7 +40,7 @@ namespace NotelyFromScratch.Controllers
         public IActionResult NoteEditor(NoteModel noteModel)
         {
             var date = DateTime.Now;
-            if (noteModel != null && noteModel.Id != Guid.Empty)
+            if (noteModel != null && noteModel.Id == Guid.Empty)
             {
                 noteModel.Id = Guid.NewGuid();
                 noteModel.CreatedDate = date;

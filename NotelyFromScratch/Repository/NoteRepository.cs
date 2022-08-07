@@ -4,23 +4,19 @@ using System;
 using System.Linq;
 
 
-namespace NotelyFromScratch.Respository
+namespace NotelyFromScratch.Repository
 {
     public class NoteRepository : INoteRepository
     {
-        private readonly List<NoteModel> _notes;
+        private readonly List<NoteModel> _notes = new List<NoteModel>();
 
         public NoteRepository()
         {
-            _notes = new List<NoteModel>();
+            SaveNote(new NoteModel { Subject="Second Try",Detail="Never Too Late", CreatedDate=DateTime.Now, Id=Guid.NewGuid(), IsDeleted=false, LastModifiedDate=DateTime.Now});
         }
         public NoteModel FindNoteById(Guid id)
         {
             var note = _notes.Find(note => note.Id == id);
-            //if (note == null)
-            //{
-            //    return  No note NoteModel.object
-            //}
             return note;
         }
         public List<NoteModel> FindNotesByDetails(String search_text)

@@ -1,6 +1,6 @@
 ﻿using NotelyFromScratch.Models;
 
-namespace NotelyFromScratch.Respository
+namespace NotelyFromScratch.Repository
 {
     public interface INoteRepository
     {
