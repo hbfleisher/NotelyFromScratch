@@ -15,15 +15,33 @@ namespace NotelyFromScratch.Controllers
 
             return View(notes);
         }
-
-        public IActionResult NoteDetail(Guid id)
+        [HttpGet]
+        public IActionResult FindNoteDetail(string search_text = "")
         {
-            if (id != Guid.Empty)
+            if (search_text != "" && search_text is not null)
             {
-                var note = _noteRepository.FindNoteById(id);
-                return View(note);
+                IEnumerable<NoteModel> notes = _noteRepository.FindNotesByDetails(search_text);
+                return View(notes);
             }
             return View();
+        }
+
+        [HttpGet]
+        public IActionResult FindNoteSubject(string search_text = "")
+        {
+            if (search_text != "" && search_text is not null)
+            {
+                IEnumerable<NoteModel> notes = _noteRepository.FindNotesBySubject(search_text);
+                return View(notes);
+            }
+            else
+            {
+                return View();
+            }
+        }
+        public IActionResult SaveSuccessful()
+        {
+            return View("Success");
         }
 
         [HttpGet]
@@ -39,22 +57,40 @@ namespace NotelyFromScratch.Controllers
         [HttpPost]
         public IActionResult NoteEditor(NoteModel noteModel)
         {
-            var date = DateTime.Now;
-            if (noteModel != null && noteModel.Id == Guid.Empty)
+            if (ModelState.IsValid)
             {
-                noteModel.Id = Guid.NewGuid();
-                noteModel.CreatedDate = date;
-                noteModel.LastModifiedDate = date;
-                _noteRepository.SaveNote(noteModel);
+                var date = DateTime.Now;
+                if (noteModel != null && noteModel.Id == Guid.Empty)
+                {
+                    noteModel.Id = Guid.NewGuid();
+                    noteModel.CreatedDate = date;
+                    noteModel.LastModifiedDate = date;
+                    _noteRepository.SaveNote(noteModel);
+                }
+                else
+                {
+                    var note = _noteRepository.FindNoteById(noteModel.Id);
+                    note.LastModifiedDate = date;
+                    note.Subject = noteModel.Subject;
+                    note.Detail = noteModel.Detail;
+                }
+                return RedirectToAction("SaveSuccessful");
             }
             else
             {
-                var note = _noteRepository.FindNoteById(noteModel.Id);
-                note.LastModifiedDate = date;
-                note.Subject = noteModel.Subject;
-                note.Detail = noteModel.Detail;
+                return View();
             }
-            return RedirectToAction("Index");
+          
+        }
+
+        public IActionResult NoteDetail(Guid id)
+        {
+            var note = _noteRepository.FindNoteById(id);
+            if (note != null)
+            { 
+                return View(note);
+            }
+            return View("Index");
         }
 
         public IActionResult DeleteNote(Guid id)

@@ -35,9 +35,16 @@
       </h3>
     </div>
   }
-
-  <div class="index__new-note-button-wrapper">
-    <a asp-action="NoteEditor" class="index__new-note-button">New Note</a>
+  <div class="row">
+      <div class="col-md-4 col-sm-12">
+        <a asp-action="NoteEditor" class="index__new-note-button">New Note</a>
+      </div>
+      <div class="col-md-4 col-sm-12">
+        <a asp-action="FindNoteSubject" class="index__new-note-button">Search Notes By Subject</a>
+      </div>
+      <div class="col-md-4 col-sm-12">
+        <a asp-action="FindNoteDetail" class="index__new-note-button">Search Notes By Details</a>
+      </div>
   </div>
 </div>
 

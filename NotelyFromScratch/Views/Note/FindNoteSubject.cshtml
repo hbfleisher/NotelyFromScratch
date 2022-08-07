@@ -1,0 +1,52 @@
+﻿@model IEnumerable<NoteModel>
+@{
+    ViewData["Title"] = "Subject Search";
+}
+<div class="index">
+    <div class="panel panel-default index__header">
+        <h3 class="panel-body">
+            Search Notes By Subject
+        </h3>
+    </div>
+    <form asp-action="FindNoteSubject" method="get">
+        <div>
+            <label class="note-editor__input-label" for="search_text">Search</label>
+            <input class="form-control note-editor__subject-input" name="search_text" id="search_text" />
+        </div>
+        <div style="margin-top: 15px;">
+            <button type="submit" class="btn btn-sm note-editor__button">Search</button>
+        </div>
+    </form>
+
+    @if (Model != null)
+    {
+        <div class="panel panel-default index__header" style="margin-top: 25px;">
+            <h3 class="panel-body">
+                Results
+            </h3>
+        </div>
+        @foreach (NoteModel note in Model.Reverse())
+        {
+        <div class="panel panel-default">
+            <a asp-action="NoteDetail" asp-route-id="@note.Id" class="index__list-item-link">
+            <div class="panel-body">
+                @note.Subject
+            </div>
+            </a>
+        </div>
+           
+        }
+        if (Model.Count() == 0)
+        {
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <p class="index__list-item">No Results</p>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        
+    }
+</div>

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 
 namespace NotelyFromScratch.Repository
@@ -21,7 +22,12 @@ namespace NotelyFromScratch.Repository
         }
         public List<NoteModel> FindNotesByDetails(String search_text)
         {
-            var notes = new List<NoteModel>(_notes.FindAll(note => note.Detail == search_text));
+            var notes = new List<NoteModel>(_notes.FindAll(note => note.Detail.IndexOf(search_text, 0, StringComparison.CurrentCultureIgnoreCase) != -1 && note.IsDeleted == false));
+            return notes;
+        }
+        public List<NoteModel> FindNotesBySubject(String search_text)
+        {
+            var notes = new List<NoteModel>(_notes.FindAll(note => note.Subject.IndexOf(search_text, 0, StringComparison.CurrentCultureIgnoreCase) != -1 && note.IsDeleted == false));
             return notes;
         }
         public IEnumerable<NoteModel> GetAllNotes()
